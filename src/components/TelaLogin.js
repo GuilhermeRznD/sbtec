@@ -4,10 +4,17 @@ import { Picker } from '@react-native-picker/picker';
 
 const { width, height } = Dimensions.get('window');
 
-const TelaLogin = () => {
+
+
+
+const TelaLogin = ({ navigation }) => {
   const [scaleValue] = useState(new Animated.Value(1));
   const [periodo, setPeriodo] = useState('');
   const [unidade, setUnidade] = useState('');
+
+  const handleEntrar = () => {
+    navigation.navigate('InterfaceDocente');
+  };
 
   const aoPressionar = () => {
     Animated.spring(scaleValue, {
@@ -82,17 +89,19 @@ const TelaLogin = () => {
           <Text style={estilos.esqueceuSenha}>Esqueceu sua senha?</Text>
         </TouchableOpacity>
 
-        <Animated.View style={{ transform: [{ scale: scaleValue }], width: '100%' }}>
-          <TouchableOpacity
-            onPressIn={aoPressionar}
-            onPressOut={aoSoltar}
-            onPress={() => console.log('Entrar')}
-            style={estilos.botao}
-          >
-            <Text style={estilos.textoBotao}>Entrar</Text>
-            <Text style={estilos.iconeSeta}>&gt;</Text>
-          </TouchableOpacity>
-        </Animated.View>
+        <Animated.View style={{ transform: [{ scale: scaleValue }], alignItems: 'center', width: '100%' }}>
+  <TouchableOpacity
+    onPressIn={aoPressionar}
+    onPressOut={aoSoltar}
+    onPress={handleEntrar} 
+    style={estilos.botao}
+  >
+    <Text style={estilos.textoBotao}>Entrar</Text>
+    <Text style={estilos.iconeSeta}>&gt;</Text>
+  </TouchableOpacity>
+
+</Animated.View>
+
       </View>
     </ScrollView>
   );
@@ -107,21 +116,21 @@ const estilos = StyleSheet.create({
   },
   imagemFundo: {
     width: '100%',
-    height: height * 0.55, // Aumenta ligeiramente a altura da imagem para compensar
-    justifyContent: 'flex-end', // Ajusta a posição do conteúdo para baixo da imagem
+    height: height * 0.55, 
+    justifyContent: 'flex-end', 
     alignItems: 'center',
-    paddingBottom: 20, // Adiciona um espaço extra na parte inferior
+    paddingBottom: 20, 
   },
   tituloContainer: {
     alignItems: 'center',
-    marginBottom: 20, // Adiciona um espaço extra abaixo do título
+    marginBottom: 20, 
   },
   tituloLinha1: {
     fontSize: 40,
     fontWeight: 'bold',
     color: '#FFA500',
     textAlign: 'left',
-    marginLeft: -width * 0.25, // Ajuste relativo ao tamanho da tela
+    marginLeft: -width * 0.25, 
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,

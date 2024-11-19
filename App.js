@@ -1,6 +1,6 @@
 import React from 'react';
-import TelaLogin from './src/components/TelaLogin';
+import AppNavigator from './src/navigation/AppNavigator'; 
 
 export default function App() {
-  return <TelaLogin />;
+  return <AppNavigator />;
 }
