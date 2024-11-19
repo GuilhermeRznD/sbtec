@@ -7,6 +7,7 @@ const { width, height } = Dimensions.get('window');
 const TelaLogin = () => {
   const [scaleValue] = useState(new Animated.Value(1));
   const [periodo, setPeriodo] = useState('');
+  const [unidade, setUnidade] = useState('');
 
   const aoPressionar = () => {
     Animated.spring(scaleValue, {
@@ -39,9 +40,19 @@ const TelaLogin = () => {
       <View style={estilos.curvaOndulada} />
 
       <View style={estilos.formulario}>
+        {/* Unidade de Ensino */}
         <View style={estilos.inputContainer}>
           <Text style={estilos.label}>Unidade de Ensino</Text>
-          <TextInput placeholder="" style={estilos.input} />
+          <Picker
+            selectedValue={unidade}
+            onValueChange={(itemValue) => setUnidade(itemValue)}
+            style={estilos.picker}
+          >
+            <Picker.Item label="Selecione a Unidade de Ensino" value="" />
+            <Picker.Item label="Unidade 1" value="Unidade 1" />
+            <Picker.Item label="Unidade 2" value="Unidade 2" />
+            <Picker.Item label="Unidade 3" value="Unidade 3" />
+          </Picker>
         </View>
 
         <View style={estilos.inputContainer}>
