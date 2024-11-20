@@ -21,7 +21,7 @@ const InterfaceDocente = () => {
       <View style={styles.header}>
         <Text style={styles.greeting}>Olá, Docente Fulano!</Text>
         <Text style={styles.schoolYear}>Ano Letivo de 2024</Text>
-        <Text style={styles.schoolName}>Adelina de Castro Boccato EMEI</Text>
+        <Text style={styles.schoolName}>Diário Eletrônico Mobile</Text>
       </View>
 
       {/* Seção de Filtros */}
