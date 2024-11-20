@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { Ionicons } from '@expo/vector-icons'; // Biblioteca de ícones (adicione ao projeto caso ainda não esteja instalada)
+import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -9,12 +9,16 @@ const InterfaceDocente = () => {
   const [turmaSelecionada, setTurmaSelecionada] = useState('');
   const [etapaSelecionada, setEtapaSelecionada] = useState('');
   const [disciplinaSelecionada, setDisciplinaSelecionada] = useState('');
-  const [telaAtiva, setTelaAtiva] = useState('Inicio'); // Estado para gerenciar a tela ativa do rodapé
+  const [telaAtiva, setTelaAtiva] = useState('Inicio');
+  const [footerExpanded, setFooterExpanded] = useState(false);
 
   const handlePesquisar = () => {
     console.log('Pesquisar clicado');
   };
 
+  const toggleFooter = () => {
+    setFooterExpanded((prev) => !prev);
+  };
   return (
     <View style={styles.container}>
       {/* Cabeçalho */}
@@ -76,40 +80,81 @@ const InterfaceDocente = () => {
       </View>
 
       {/* Rodapé */}
-      <View style={styles.footer}>
-        {/* Botão da tela de Início */}
+      <View style={[styles.footer, footerExpanded && styles.footerExpanded]}>
         <TouchableOpacity
           style={styles.footerButton}
-          onPress={() => setTelaAtiva('Inicio')}
+          onPress={toggleFooter}
         >
-          <Ionicons name="home-outline" size={24} color={telaAtiva === 'Inicio' ? '#F9DC5C' : '#FFFFFF'} />
-          <Text style={[styles.footerButtonText, telaAtiva === 'Inicio' && styles.activeFooterButtonText]}>
-            Início
+          <Ionicons
+            name={footerExpanded ? "chevron-down-outline" : "chevron-up-outline"}
+            size={24}
+            color="#FFFFFF"
+          />
+          <Text style={styles.footerButtonText}>
+            {footerExpanded ? "Fechar" : "Mais"}
           </Text>
         </TouchableOpacity>
 
-        {/* Botão da tela de Notas */}
         <TouchableOpacity
           style={styles.footerButton}
           onPress={() => setTelaAtiva('Notas')}
         >
-          <Ionicons name="document-text-outline" size={24} color={telaAtiva === 'Notas' ? '#F9DC5C' : '#FFFFFF'} />
-          <Text style={[styles.footerButtonText, telaAtiva === 'Notas' && styles.activeFooterButtonText]}>
+          <Ionicons
+            name="document-text-outline"
+            size={24}
+            color={telaAtiva === 'Notas' ? '#F9DC5C' : '#FFFFFF'}
+          />
+          <Text
+            style={[
+              styles.footerButtonText,
+              telaAtiva === 'Notas' && styles.activeFooterButtonText,
+            ]}
+          >
             Notas
           </Text>
         </TouchableOpacity>
 
-        {/* Botão da tela de Relatório */}
         <TouchableOpacity
           style={styles.footerButton}
           onPress={() => setTelaAtiva('Relatorio')}
         >
-          <Ionicons name="clipboard-outline" size={24} color={telaAtiva === 'Relatorio' ? '#F9DC5C' : '#FFFFFF'} />
-          <Text style={[styles.footerButtonText, telaAtiva === 'Relatorio' && styles.activeFooterButtonText]}>
+          <Ionicons
+            name="clipboard-outline"
+            size={24}
+            color={telaAtiva === 'Relatorio' ? '#F9DC5C' : '#FFFFFF'}
+          />
+          <Text
+            style={[
+              styles.footerButtonText,
+              telaAtiva === 'Relatorio' && styles.activeFooterButtonText,
+            ]}
+          >
             Relatório
           </Text>
         </TouchableOpacity>
       </View>
+
+      {/* Conteúdo do rodapé expandido */}
+      {footerExpanded && (
+        <View style={styles.additionalOptions}>
+          <TouchableOpacity style={styles.expandedOption}>
+            <Ionicons name="book-outline" size={24} color="#FFFFFF" />
+            <Text style={styles.expandedOptionText}>Registrar Aulas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.expandedOption}>
+            <Ionicons name="checkmark-done-outline" size={24} color="#FFFFFF" />
+            <Text style={styles.expandedOptionText}>Registrar Presença</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.expandedOption}>
+            <Ionicons name="warning-outline" size={24} color="#FFFFFF" />
+            <Text style={styles.expandedOptionText}>Ocorrências</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.expandedOption}>
+            <Ionicons name="calendar-outline" size={24} color="#FFFFFF" />
+            <Text style={styles.expandedOptionText}>Agenda</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
@@ -123,7 +168,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#0E0E2C',
     width: '100%',
-    height: height * 0.3, 
+    height: height * 0.3,
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomLeftRadius: 20,
@@ -146,7 +191,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   filterContainer: {
-    marginTop: -height * 0.08, 
+    marginTop: -height * 0.08,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     borderWidth: 2,
@@ -158,14 +203,14 @@ const styles = StyleSheet.create({
   filterTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 3, 
-    alignSelf: 'flex-start', 
+    marginBottom: 3,
+    alignSelf: 'flex-start',
   },
   filterRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    marginBottom: 30, 
+    marginBottom: 30,
   },
   filterItem: {
     flex: 1,
@@ -180,10 +225,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#CCC',
     borderRadius: 5,
-    height: 30, 
+    height: 30,
   },
   searchButton: {
-    position: 'absolute', 
+    position: 'absolute',
     right: 20,
     bottom: -15,
     backgroundColor: '#0E0E2C',
@@ -197,27 +242,62 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   footer: {
-    flexDirection: 'row', 
-    justifyContent: 'space-around', 
-    backgroundColor: '#0E0E2C', 
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#0E0E2C',
     width: '100%',
     paddingVertical: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    position: 'absolute', 
+    position: 'absolute',
     bottom: 0,
   },
   footerButton: {
     alignItems: 'center',
+    marginBottom: 10, 
   },
   footerButtonText: {
     color: '#FFFFFF',
     fontSize: 12,
+    marginTop: 5,
   },
   activeFooterButtonText: {
     color: '#F9DC5C',
     fontWeight: 'bold',
   },
+  expandedOptionText: {
+    fontSize: 12, 
+    color: '#FFFFFF',
+    marginTop: 3, 
+    textAlign: 'center',
+  },
+  footerExpanded: {
+    flexDirection: 'row', 
+    flexWrap: 'wrap', 
+    alignItems: 'center', 
+    justifyContent: 'space-around', 
+    backgroundColor: '#0E0E2C', 
+    padding: 10, 
+    width: '100%', 
+    position: 'absolute',
+    bottom: 0,
+    height: height * 0.4, 
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  additionalOptions: {
+    width: '100%', 
+    flexDirection: 'row', 
+    justifyContent: 'space-around', 
+    flexWrap: 'wrap', 
+    marginTop: 230, 
+  },
+  expandedOption: {
+    alignItems: 'center', 
+    margin: 10, 
+    width: '40%', 
+  },
+
 });
 
 export default InterfaceDocente;
