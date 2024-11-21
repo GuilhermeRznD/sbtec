@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
 const InterfaceDocente = () => {
+  const navigation = useNavigation();
+
   const [turmaSelecionada, setTurmaSelecionada] = useState('');
   const [etapaSelecionada, setEtapaSelecionada] = useState('');
   const [disciplinaSelecionada, setDisciplinaSelecionada] = useState('');
@@ -141,7 +144,13 @@ const InterfaceDocente = () => {
             <Ionicons name="book-outline" size={24} color="#FFFFFF" />
             <Text style={styles.expandedOptionText}>Registrar Aulas</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.expandedOption}>
+          <TouchableOpacity 
+            style={styles.expandedOption} 
+            onPress={() => {
+              console.log('Navegando para RegistroPresenca');
+              navigation.navigate('RegistroPresenca');
+            }}
+          >
             <Ionicons name="checkmark-done-outline" size={24} color="#FFFFFF" />
             <Text style={styles.expandedOptionText}>Registrar Presença</Text>
           </TouchableOpacity>
@@ -290,7 +299,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     justifyContent: 'space-around', 
     flexWrap: 'wrap', 
-    marginTop: 230, 
+    marginTop: 260, 
   },
   expandedOption: {
     alignItems: 'center', 
