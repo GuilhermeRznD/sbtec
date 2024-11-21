@@ -19,13 +19,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#011B3B"
-      }
+      },
+      "package": "com.guilhermerznd.sbtec"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "235a55fc-e9d5-4341-9a04-de8c4bcbb35a"
+      }
+    }
   }
 }
