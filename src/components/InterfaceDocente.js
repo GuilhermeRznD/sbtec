@@ -158,9 +158,15 @@ const InterfaceDocente = () => {
             <Ionicons name="warning-outline" size={24} color="#FFFFFF" />
             <Text style={styles.expandedOptionText}>Ocorrências</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.expandedOption}>
-            <Ionicons name="calendar-outline" size={24} color="#FFFFFF" />
-            <Text style={styles.expandedOptionText}>Agenda</Text>
+          <TouchableOpacity 
+              style={styles.expandedOption} 
+              onPress={() => {
+                console.log('Navegando para Agenda');
+                navigation.navigate('Agenda');
+              }}
+            >
+              <Ionicons name="calendar-outline" size={24} color="#FFFFFF" />
+              <Text style={styles.expandedOptionText}>Agenda</Text>
           </TouchableOpacity>
         </View>
       )}
