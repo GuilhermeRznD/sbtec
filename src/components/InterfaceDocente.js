@@ -1,10 +1,20 @@
+
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Platform,
+  SafeAreaView,
+  ScrollView
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const InterfaceDocente = () => {
   const navigation = useNavigation();
@@ -22,162 +32,145 @@ const InterfaceDocente = () => {
   const toggleFooter = () => {
     setFooterExpanded((prev) => !prev);
   };
+
   return (
-    <View style={styles.container}>
-      {/* Cabeçalho */}
-      <View style={styles.header}>
-        <Text style={styles.greeting}>Olá, Docente Fulano!</Text>
-        <Text style={styles.schoolYear}>Ano Letivo de 2024</Text>
-        <Text style={styles.schoolName}>Diário Eletrônico Mobile</Text>
-      </View>
-
-      {/* Seção de Filtros */}
-      <View style={styles.filterContainer}>
-        <Text style={styles.filterTitle}>Filtro</Text>
-        <View style={styles.filterRow}>
-          <View style={styles.filterItem}>
-            <Text style={styles.filterLabel}>Turma</Text>
-            <Picker
-              selectedValue={turmaSelecionada}
-              onValueChange={(itemValue) => setTurmaSelecionada(itemValue)}
-              style={styles.picker}
-            >
-              <Picker.Item label="Selecione" value="" />
-              <Picker.Item label="1º Ano" value="1ano" />
-              <Picker.Item label="2º Ano" value="2ano" />
-              <Picker.Item label="3º Ano" value="3ano" />
-            </Picker>
-          </View>
-
-          <View style={styles.filterItem}>
-            <Text style={styles.filterLabel}>Etapa Bimestral</Text>
-            <Picker
-              selectedValue={etapaSelecionada}
-              onValueChange={(itemValue) => setEtapaSelecionada(itemValue)}
-              style={styles.picker}
-            >
-              <Picker.Item label="Selecione" value="" />
-              <Picker.Item label="1ª Etapa" value="1etapa" />
-              <Picker.Item label="2ª Etapa" value="2etapa" />
-              <Picker.Item label="3ª Etapa" value="3etapa" />
-            </Picker>
-          </View>
-
-          <View style={styles.filterItem}>
-            <Text style={styles.filterLabel}>Disciplina</Text>
-            <Picker
-              selectedValue={disciplinaSelecionada}
-              onValueChange={(itemValue) => setDisciplinaSelecionada(itemValue)}
-              style={styles.picker}
-            >
-              <Picker.Item label="Selecione" value="" />
-              <Picker.Item label="Matemática" value="matematica" />
-              <Picker.Item label="Português" value="portugues" />
-            </Picker>
-          </View>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.greeting}>Olá, Docente Fulano!</Text>
+          <Text style={styles.schoolYear}>Ano Letivo de 2024</Text>
+          <Text style={styles.schoolName}>Diário Eletrônico Mobile</Text>
         </View>
 
-        <TouchableOpacity style={styles.searchButton} onPress={handlePesquisar}>
-          <Text style={styles.searchButtonText}>Pesquisar</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.filterTitle}>Filtro</Text>
+          <View style={styles.filterRow}>
+            <View style={styles.filterItem}>
+              <Text style={styles.filterLabel}>Turma</Text>
+              <Picker
+                selectedValue={turmaSelecionada}
+                onValueChange={(itemValue) => setTurmaSelecionada(itemValue)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Selecione" value="" />
+                <Picker.Item label="1º Ano" value="1ano" />
+                <Picker.Item label="2º Ano" value="2ano" />
+                <Picker.Item label="3º Ano" value="3ano" />
+              </Picker>
+            </View>
 
-      {/* Rodapé */}
-      <View style={[styles.footer, footerExpanded && styles.footerExpanded]}>
-        <TouchableOpacity
-          style={styles.footerButton}
-          onPress={toggleFooter}
-        >
-          <Ionicons
-            name={footerExpanded ? "chevron-down-outline" : "chevron-up-outline"}
-            size={24}
-            color="#FFFFFF"
-          />
-          <Text style={styles.footerButtonText}>
-            {footerExpanded ? "Fechar" : "Mais"}
-          </Text>
-        </TouchableOpacity>
+            <View style={styles.filterItem}>
+              <Text style={styles.filterLabel}>Etapa Bimestral</Text>
+              <Picker
+                selectedValue={etapaSelecionada}
+                onValueChange={(itemValue) => setEtapaSelecionada(itemValue)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Selecione" value="" />
+                <Picker.Item label="1ª Etapa" value="1etapa" />
+                <Picker.Item label="2ª Etapa" value="2etapa" />
+                <Picker.Item label="3ª Etapa" value="3etapa" />
+              </Picker>
+            </View>
 
-        <TouchableOpacity
-          style={styles.footerButton}
-          onPress={() => setTelaAtiva('Notas')}
-        >
-          <Ionicons
-            name="document-text-outline"
-            size={24}
-            color={telaAtiva === 'Notas' ? '#F9DC5C' : '#FFFFFF'}
-          />
-          <Text
-            style={[
-              styles.footerButtonText,
-              telaAtiva === 'Notas' && styles.activeFooterButtonText,
-            ]}
-          >
-            Notas
-          </Text>
-        </TouchableOpacity>
+            <View style={styles.filterItem}>
+              <Text style={styles.filterLabel}>Disciplina</Text>
+              <Picker
+                selectedValue={disciplinaSelecionada}
+                onValueChange={(itemValue) => setDisciplinaSelecionada(itemValue)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Selecione" value="" />
+                <Picker.Item label="Matemática" value="matematica" />
+                <Picker.Item label="Português" value="portugues" />
+              </Picker>
+            </View>
+          </View>
 
-        <TouchableOpacity
-          style={styles.footerButton}
-          onPress={() => setTelaAtiva('Relatorio')}
-        >
-          <Ionicons
-            name="clipboard-outline"
-            size={24}
-            color={telaAtiva === 'Relatorio' ? '#F9DC5C' : '#FFFFFF'}
-          />
-          <Text
-            style={[
-              styles.footerButtonText,
-              telaAtiva === 'Relatorio' && styles.activeFooterButtonText,
-            ]}
-          >
-            Relatório
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Conteúdo do rodapé expandido */}
-      {footerExpanded && (
-        <View style={styles.additionalOptions}>
-          <TouchableOpacity style={styles.expandedOption}>
-            <Ionicons name="book-outline" size={24} color="#FFFFFF" />
-            <Text style={styles.expandedOptionText}>Registrar Aulas</Text>
+          <TouchableOpacity style={styles.searchButton} onPress={handlePesquisar}>
+            <Text style={styles.searchButtonText}>Pesquisar</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.expandedOption} 
-            onPress={() => {
-              console.log('Navegando para RegistroPresenca');
-              navigation.navigate('RegistroPresenca');
-            }}
-          >
-            <Ionicons name="checkmark-done-outline" size={24} color="#FFFFFF" />
-            <Text style={styles.expandedOptionText}>Registrar Presença</Text>
+        </View>
+      </ScrollView>
+
+      <View style={[styles.footerContainer, footerExpanded && styles.footerContainerExpanded]}>
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={toggleFooter} style={styles.footerButton}>
+            <Ionicons
+              name={footerExpanded ? 'chevron-down-outline' : 'chevron-up-outline'}
+              size={24}
+              color="#FFFFFF"
+            />
+            <Text style={styles.footerButtonText}>
+              {footerExpanded ? 'Fechar' : 'Mais'}
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.expandedOption}>
-            <Ionicons name="warning-outline" size={24} color="#FFFFFF" />
-            <Text style={styles.expandedOptionText}>Ocorrências</Text>
-          </TouchableOpacity>
-          <TouchableOpacity 
-              style={styles.expandedOption} 
-              onPress={() => {
-                console.log('Navegando para Agenda');
-                navigation.navigate('Agenda');
-              }}
+
+          <TouchableOpacity onPress={() => setTelaAtiva('Notas')} style={styles.footerButton}>
+            <Ionicons
+              name="document-text-outline"
+              size={24}
+              color={telaAtiva === 'Notas' ? '#F9DC5C' : '#FFFFFF'}
+            />
+            <Text
+              style={[
+                styles.footerButtonText,
+                telaAtiva === 'Notas' && styles.activeFooterButtonText,
+              ]}
             >
+              Notas
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setTelaAtiva('Relatorio')} style={styles.footerButton}>
+            <Ionicons
+              name="clipboard-outline"
+              size={24}
+              color={telaAtiva === 'Relatorio' ? '#F9DC5C' : '#FFFFFF'}
+            />
+            <Text
+              style={[
+                styles.footerButtonText,
+                telaAtiva === 'Relatorio' && styles.activeFooterButtonText,
+              ]}
+            >
+              Relatório
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {footerExpanded && (
+          <View style={styles.additionalOptions}>
+            <TouchableOpacity style={styles.expandedOption}>
+              <Ionicons name="book-outline" size={24} color="#FFFFFF" />
+              <Text style={styles.expandedOptionText}>Registrar Aulas</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.expandedOption} onPress={() => navigation.navigate('RegistroPresenca')}>
+              <Ionicons name="checkmark-done-outline" size={24} color="#FFFFFF" />
+              <Text style={styles.expandedOptionText}>Registrar Presença</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.expandedOption}>
+              <Ionicons name="warning-outline" size={24} color="#FFFFFF" />
+              <Text style={styles.expandedOptionText}>Ocorrências</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.expandedOption} onPress={() => navigation.navigate('Agenda')}>
               <Ionicons name="calendar-outline" size={24} color="#FFFFFF" />
               <Text style={styles.expandedOptionText}>Agenda</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+  },
+  container: {
+    paddingBottom: 120,
     alignItems: 'center',
   },
   header: {
@@ -256,20 +249,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  footerContainer: {
+    backgroundColor: '#0E0E2C',
+    paddingTop: 10,
+    paddingBottom: Platform.OS === 'android' ? 20 : 30,
+    paddingHorizontal: 10,
+  },
+  footerContainerExpanded: {
+    minHeight: height * 0.35,
+  },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: '#0E0E2C',
-    width: '100%',
-    paddingVertical: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    position: 'absolute',
-    bottom: 0,
   },
   footerButton: {
     alignItems: 'center',
-    marginBottom: 10, 
   },
   footerButtonText: {
     color: '#FFFFFF',
@@ -280,39 +274,23 @@ const styles = StyleSheet.create({
     color: '#F9DC5C',
     fontWeight: 'bold',
   },
-  expandedOptionText: {
-    fontSize: 12, 
-    color: '#FFFFFF',
-    marginTop: 3, 
-    textAlign: 'center',
-  },
-  footerExpanded: {
-    flexDirection: 'row', 
-    flexWrap: 'wrap', 
-    alignItems: 'center', 
-    justifyContent: 'space-around', 
-    backgroundColor: '#0E0E2C', 
-    padding: 10, 
-    width: '100%', 
-    position: 'absolute',
-    bottom: 0,
-    height: height * 0.4, 
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
   additionalOptions: {
-    width: '100%', 
-    flexDirection: 'row', 
-    justifyContent: 'space-around', 
-    flexWrap: 'wrap', 
-    marginTop: 260, 
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    marginTop: 20,
   },
   expandedOption: {
-    alignItems: 'center', 
-    margin: 10, 
-    width: '40%', 
+    alignItems: 'center',
+    margin: 10,
+    width: '40%',
   },
-
+  expandedOptionText: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    marginTop: 3,
+    textAlign: 'center',
+  },
 });
 
 export default InterfaceDocente;
