@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Dimensions, Animated, ScrollView } from 'react-native';
+import {
+  View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground,
+  Dimensions, Animated, ScrollView, Alert, Modal
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 const { width, height } = Dimensions.get('window');
-
-
-
 
 const TelaLogin = ({ navigation }) => {
   const [scaleValue] = useState(new Animated.Value(1));
   const [periodo, setPeriodo] = useState('');
   const [unidade, setUnidade] = useState('');
+  const [matricula, setMatricula] = useState('');
+  const [senha, setSenha] = useState('');
+  const [modalVisivel, setModalVisivel] = useState(false);
+  const [emailRecuperacao, setEmailRecuperacao] = useState('');
 
   const handleEntrar = () => {
+    if (!unidade || !periodo || !matricula.trim() || !senha.trim()) {
+      Alert.alert('Campos obrigatórios', 'Por favor, preencha todos os campos.');
+      return;
+    }
     navigation.navigate('InterfaceDocente');
   };
 
@@ -47,12 +55,11 @@ const TelaLogin = ({ navigation }) => {
       <View style={estilos.curvaOndulada} />
 
       <View style={estilos.formulario}>
-        {/* Unidade de Ensino */}
         <View style={estilos.inputContainer}>
           <Text style={estilos.label}>Unidade de Ensino</Text>
           <Picker
             selectedValue={unidade}
-            onValueChange={(itemValue) => setUnidade(itemValue)}
+            onValueChange={setUnidade}
             style={estilos.picker}
           >
             <Picker.Item label="Selecione a Unidade de Ensino" value="" />
@@ -66,7 +73,7 @@ const TelaLogin = ({ navigation }) => {
           <Text style={estilos.label}>Período Letivo</Text>
           <Picker
             selectedValue={periodo}
-            onValueChange={(itemValue) => setPeriodo(itemValue)}
+            onValueChange={setPeriodo}
             style={estilos.picker}
           >
             <Picker.Item label="Selecione o Período Letivo" value="" />
@@ -77,32 +84,109 @@ const TelaLogin = ({ navigation }) => {
 
         <View style={estilos.inputContainer}>
           <Text style={estilos.label}>Matrícula SIGRH</Text>
-          <TextInput placeholder="" style={estilos.input} />
+          <TextInput
+            value={matricula}
+            onChangeText={setMatricula}
+            placeholder=""
+            style={estilos.input}
+          />
         </View>
 
         <View style={estilos.inputContainer}>
           <Text style={estilos.label}>Senha</Text>
-          <TextInput placeholder="" style={estilos.input} secureTextEntry />
+          <TextInput
+            value={senha}
+            onChangeText={setSenha}
+            placeholder=""
+            style={estilos.input}
+            secureTextEntry
+          />
         </View>
 
-        <TouchableOpacity onPress={() => console.log('Esqueceu sua senha?')} style={estilos.esqueceuSenhaContainer}>
+        <TouchableOpacity
+          onPress={() => setModalVisivel(true)}
+          style={estilos.esqueceuSenhaContainer}
+        >
           <Text style={estilos.esqueceuSenha}>Esqueceu sua senha?</Text>
         </TouchableOpacity>
 
         <Animated.View style={{ transform: [{ scale: scaleValue }], alignItems: 'center', width: '100%' }}>
-  <TouchableOpacity
-    onPressIn={aoPressionar}
-    onPressOut={aoSoltar}
-    onPress={handleEntrar} 
-    style={estilos.botao}
-  >
-    <Text style={estilos.textoBotao}>Entrar</Text>
-    <Text style={estilos.iconeSeta}>&gt;</Text>
-  </TouchableOpacity>
-
-</Animated.View>
-
+          <TouchableOpacity
+            onPressIn={aoPressionar}
+            onPressOut={aoSoltar}
+            onPress={handleEntrar}
+            style={estilos.botao}
+          >
+            <Text style={estilos.textoBotao}>Entrar</Text>
+            <Text style={estilos.iconeSeta}>&gt;</Text>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
+
+      <Modal
+        visible={modalVisivel}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setModalVisivel(false)}
+      >
+        <View style={estilos.modalContainer}>
+          <View style={estilos.modalContent}>
+            <Text style={estilos.modalTitulo}>Recuperação de Senha</Text>
+            <Text style={estilos.modalDescricao}>Digite seu e-mail para redefinir a senha:</Text>
+
+            <View style={{
+              width: '100%',
+              marginBottom: 15,
+              borderWidth: 1,
+              borderColor: '#009688',
+              borderRadius: 8,
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              backgroundColor: '#fff',
+            }}>
+              <TextInput
+                value={emailRecuperacao}
+                onChangeText={setEmailRecuperacao}
+                placeholder="Digite seu e-mail"
+                placeholderTextColor="#999"
+                style={{
+                  height: 40,
+                  color: '#009688',
+                }}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+
+            <TouchableOpacity
+              style={estilos.botao}
+              onPress={() => {
+                const emailValido = emailRecuperacao.includes('@') && emailRecuperacao.includes('.');
+                
+                if (!emailRecuperacao.trim()) {
+                  Alert.alert('Campo obrigatório', 'Por favor, preencha o campo de e-mail.');
+                  return;
+                }
+
+                if (!emailValido) {
+                  Alert.alert('E-mail inválido', 'Digite um e-mail em formato válido, como exemplo@dominio.com');
+                  return;
+                }
+
+                setModalVisivel(false);
+                setEmailRecuperacao('');
+                Alert.alert('Solicitação enviada', 'Se o e-mail for válido, você receberá instruções.');
+              }}
+            >
+              <Text style={estilos.textoBotao}>Enviar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => setModalVisivel(false)}>
+              <Text style={{ color: '#00796B', marginTop: 10 }}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -116,21 +200,21 @@ const estilos = StyleSheet.create({
   },
   imagemFundo: {
     width: '100%',
-    height: height * 0.55, 
-    justifyContent: 'flex-end', 
+    height: height * 0.55,
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: 20, 
+    paddingBottom: 20,
   },
   tituloContainer: {
     alignItems: 'center',
-    marginBottom: 20, 
+    marginBottom: 20,
   },
   tituloLinha1: {
     fontSize: 40,
     fontWeight: 'bold',
     color: '#FFA500',
     textAlign: 'left',
-    marginLeft: -width * 0.25, 
+    marginLeft: -width * 0.25,
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
@@ -231,6 +315,31 @@ const estilos = StyleSheet.create({
   iconeSeta: {
     color: '#FFA500',
     fontSize: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '85%',
+    alignItems: 'center',
+  },
+  modalTitulo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#00796B',
+  },
+  modalDescricao: {
+    fontSize: 14,
+    marginBottom: 10,
+    textAlign: 'center',
+    color: '#333',
   },
 });
 
