@@ -38,3 +38,7 @@ yarn-error.*
 # Ignore arquivos e pastas do editor
 .idea/
 .vscode/
+
+# Ignore arquivos e pastas do editor
+.idea/
+.vscode/
