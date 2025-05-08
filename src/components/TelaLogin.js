@@ -16,6 +16,10 @@ const TelaLogin = ({ navigation }) => {
   const [modalVisivel, setModalVisivel] = useState(false);
   const [emailRecuperacao, setEmailRecuperacao] = useState('');
 
+  
+  const anoAtual = new Date().getFullYear();
+  const periodos = [`${anoAtual}.1`, `${anoAtual}.2`];
+
   const handleEntrar = () => {
     if (!unidade || !periodo || !matricula.trim() || !senha.trim()) {
       Alert.alert('Campos obrigatórios', 'Por favor, preencha todos os campos.');
@@ -74,13 +78,14 @@ const TelaLogin = ({ navigation }) => {
           <Picker
             selectedValue={periodo}
             onValueChange={setPeriodo}
-            style={estilos.picker}
-          >
-            <Picker.Item label="Selecione o Período Letivo" value="" />
-            <Picker.Item label="2024.1" value="2024.1" />
-            <Picker.Item label="2024.2" value="2024.2" />
-          </Picker>
-        </View>
+            style={estilos.picker}>
+          <Picker.Item label="Selecione o Período Letivo"         
+            value="" />{periodos.map((p) => (
+          <Picker.Item key={p} label={p} value={p} />
+    ))}
+  </Picker>
+</View>
+
 
         <View style={estilos.inputContainer}>
           <Text style={estilos.label}>Matrícula SIGRH</Text>
