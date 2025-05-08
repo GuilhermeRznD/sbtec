@@ -5,7 +5,7 @@ import TelaLogin from '../components/TelaLogin';
 import InterfaceDocente from '../components/InterfaceDocente'; 
 import RegistroPresenca from '../components/RegistroPresenca'; 
 import Agenda from '../components/Agenda'; 
-import ocorrencia from '../components/ocorrencia'; 
+import RegistroOcorrencia from '../components/RegistroOcorrencia'; 
 
 const Stack = createStackNavigator();
 
@@ -24,8 +24,8 @@ const AppNavigator = () => {
           options={{ headerShown: false }} 
         />
         <Stack.Screen 
-          name="ocorrencia" 
-          component={ocorrencia} 
+          name="RegistroOcorrencia" 
+          component={RegistroOcorrencia} 
           options={{ headerShown: false }} 
         />
         <Stack.Screen 

@@ -149,10 +149,11 @@ const InterfaceDocente = () => {
               <Ionicons name="checkmark-done-outline" size={24} color="#FFFFFF" />
               <Text style={styles.expandedOptionText}>Registrar Presença</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.expandedOption}>
+            <TouchableOpacity style={styles.expandedOption} onPress={() => navigation.navigate('RegistroOcorrencia')}>
               <Ionicons name="warning-outline" size={24} color="#FFFFFF" />
               <Text style={styles.expandedOptionText}>Ocorrências</Text>
             </TouchableOpacity>
+
             <TouchableOpacity style={styles.expandedOption} onPress={() => navigation.navigate('Agenda')}>
               <Ionicons name="calendar-outline" size={24} color="#FFFFFF" />
               <Text style={styles.expandedOptionText}>Agenda</Text>
