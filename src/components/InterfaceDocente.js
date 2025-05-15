@@ -35,7 +35,10 @@ const InterfaceDocente = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={[
+        styles.container,
+        { paddingBottom: footerExpanded ? height * 0.4 : 120 }
+      ]}>
         <View style={styles.header}>
           <Text style={styles.greeting}>Olá, Docente Fulano!</Text>
           <Text style={styles.schoolYear}>Ano Letivo de 2024</Text>
@@ -112,12 +115,10 @@ const InterfaceDocente = () => {
               size={24}
               color={telaAtiva === 'Notas' ? '#F9DC5C' : '#FFFFFF'}
             />
-            <Text
-              style={[
-                styles.footerButtonText,
-                telaAtiva === 'Notas' && styles.activeFooterButtonText,
-              ]}
-            >
+            <Text style={[
+              styles.footerButtonText,
+              telaAtiva === 'Notas' && styles.activeFooterButtonText
+            ]}>
               Notas
             </Text>
           </TouchableOpacity>
@@ -128,12 +129,10 @@ const InterfaceDocente = () => {
               size={24}
               color={telaAtiva === 'Relatorio' ? '#F9DC5C' : '#FFFFFF'}
             />
-            <Text
-              style={[
-                styles.footerButtonText,
-                telaAtiva === 'Relatorio' && styles.activeFooterButtonText,
-              ]}
-            >
+            <Text style={[
+              styles.footerButtonText,
+              telaAtiva === 'Relatorio' && styles.activeFooterButtonText
+            ]}>
               Relatório
             </Text>
           </TouchableOpacity>
@@ -153,7 +152,6 @@ const InterfaceDocente = () => {
               <Ionicons name="warning-outline" size={24} color="#FFFFFF" />
               <Text style={styles.expandedOptionText}>Ocorrências</Text>
             </TouchableOpacity>
-
             <TouchableOpacity style={styles.expandedOption} onPress={() => navigation.navigate('Agenda')}>
               <Ionicons name="calendar-outline" size={24} color="#FFFFFF" />
               <Text style={styles.expandedOptionText}>Agenda</Text>
@@ -166,14 +164,8 @@ const InterfaceDocente = () => {
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  container: {
-    paddingBottom: 120,
-    alignItems: 'center',
-  },
+  safeArea: { flex: 1, backgroundColor: '#FFFFFF' },
+  container: { alignItems: 'center' },
   header: {
     backgroundColor: '#0E0E2C',
     width: '100%',
@@ -183,22 +175,9 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
-  greeting: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-  },
-  schoolYear: {
-    fontSize: 16,
-    color: '#ADB5BD',
-    marginTop: 5,
-  },
-  schoolName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#F9DC5C',
-    marginTop: 5,
-  },
+  greeting: { fontSize: 24, fontWeight: 'bold', color: '#FFFFFF' },
+  schoolYear: { fontSize: 16, color: '#ADB5BD', marginTop: 5 },
+  schoolName: { fontSize: 16, fontWeight: 'bold', color: '#F9DC5C', marginTop: 5 },
   filterContainer: {
     marginTop: -height * 0.08,
     backgroundColor: '#FFFFFF',
@@ -209,26 +188,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
   },
-  filterTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 3,
-    alignSelf: 'flex-start',
-  },
+  filterTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 3, alignSelf: 'flex-start' },
   filterRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: 30,
   },
-  filterItem: {
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  filterLabel: {
-    fontSize: 12,
-    marginBottom: 5,
-  },
+  filterItem: { flex: 1, marginHorizontal: 5 },
+  filterLabel: { fontSize: 12, marginBottom: 5 },
   picker: {
     backgroundColor: '#F9F9F9',
     borderWidth: 1,
@@ -245,11 +213,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  searchButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  searchButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: 'bold' },
   footerContainer: {
     backgroundColor: '#0E0E2C',
     paddingTop: 10,
@@ -259,22 +223,10 @@ const styles = StyleSheet.create({
   footerContainerExpanded: {
     minHeight: height * 0.35,
   },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  footerButton: {
-    alignItems: 'center',
-  },
-  footerButtonText: {
-    color: '#FFFFFF',
-    fontSize: 12,
-    marginTop: 5,
-  },
-  activeFooterButtonText: {
-    color: '#F9DC5C',
-    fontWeight: 'bold',
-  },
+  footer: { flexDirection: 'row', justifyContent: 'space-around' },
+  footerButton: { alignItems: 'center' },
+  footerButtonText: { color: '#FFFFFF', fontSize: 12, marginTop: 5 },
+  activeFooterButtonText: { color: '#F9DC5C', fontWeight: 'bold' },
   additionalOptions: {
     flexDirection: 'row',
     flexWrap: 'wrap',

@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'rea
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 
 const Agenda = () => {
   const [tipoSelecionado, setTipoSelecionado] = useState('provas');
@@ -11,6 +13,7 @@ const Agenda = () => {
   const [tipo, setTipo] = useState('aulas');
   const [eventos, setEventos] = useState([]);
   const [mostrandoDatePicker, setMostrandoDatePicker] = useState(false);
+  const navigation = useNavigation();
 
   const formatarData = (data) => {
     const dia = String(data.getDate()).padStart(2, '0');
@@ -40,9 +43,12 @@ const Agenda = () => {
         </View>
         <View style={styles.mes}>
           {dias.map((dia) => {
-            const eventosDia = eventos.filter(
-              (e) => parseInt(e.data.split('/')[0]) === dia
-            );
+            const eventosDia = eventos.filter
+              ( (e) =>
+               parseInt(e.data.split('/')[0]) === dia &&
+               e.tipo === tipoSelecionado
+);
+
             const corEvento =
               eventosDia.find((e) => e.tipo === 'provas')
                 ? styles.diaProva
@@ -71,7 +77,7 @@ const Agenda = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.btnVoltar}>
+          <TouchableOpacity style={styles.btnVoltar} onPress={() => navigation.navigate('InterfaceDocente')}>
             <Ionicons name="arrow-back" size={24} color="#6A1B9A" />
           </TouchableOpacity>
           <Text style={styles.titulo}>Agenda</Text>
@@ -170,15 +176,15 @@ const styles = StyleSheet.create({
         padding: 25,
       },
       header: {
-        paddingVertical: 30, // Mais espaço acima e abaixo
-        backgroundColor: '#080527', // Fundo destacado para o cabeçalho
+        paddingVertical: 30, 
+        backgroundColor: '#080527', 
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
       },
       btnVoltar: {
         position: 'absolute',
         left: 20,
-        top: 20, // Ajustado para se alinhar com o novo layout
+        top: 20, 
         backgroundColor: '#FFFFFF',
         borderRadius: 20,
         width: 40,
@@ -187,7 +193,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       titulo: {
-        marginTop: 20, // Garantir que o texto fique centralizado mesmo com ícones
+        marginTop: 20, 
         textAlign: 'center',
         fontSize: 28,
         fontWeight: 'bold',
