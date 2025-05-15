@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   View,
@@ -26,7 +25,11 @@ const InterfaceDocente = () => {
   const [footerExpanded, setFooterExpanded] = useState(false);
 
   const handlePesquisar = () => {
-    console.log('Pesquisar clicado');
+    navigation.navigate('RegistroPresenca', {
+      turma: turmaSelecionada,
+      etapa: etapaSelecionada,
+      disciplina: disciplinaSelecionada,
+    });
   };
 
   const toggleFooter = () => {
@@ -35,10 +38,7 @@ const InterfaceDocente = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={[
-        styles.container,
-        { paddingBottom: footerExpanded ? height * 0.4 : 120 }
-      ]}>
+      <ScrollView contentContainerStyle={[styles.container, { paddingBottom: footerExpanded ? height * 0.4 : 200 }]}>
         <View style={styles.header}>
           <Text style={styles.greeting}>Olá, Docente Fulano!</Text>
           <Text style={styles.schoolYear}>Ano Letivo de 2024</Text>
@@ -47,47 +47,49 @@ const InterfaceDocente = () => {
 
         <View style={styles.filterContainer}>
           <Text style={styles.filterTitle}>Filtro</Text>
-          <View style={styles.filterRow}>
-            <View style={styles.filterItem}>
-              <Text style={styles.filterLabel}>Turma</Text>
-              <Picker
-                selectedValue={turmaSelecionada}
-                onValueChange={(itemValue) => setTurmaSelecionada(itemValue)}
-                style={styles.picker}
-              >
-                <Picker.Item label="Selecione" value="" />
-                <Picker.Item label="1º Ano" value="1ano" />
-                <Picker.Item label="2º Ano" value="2ano" />
-                <Picker.Item label="3º Ano" value="3ano" />
-              </Picker>
-            </View>
 
-            <View style={styles.filterItem}>
-              <Text style={styles.filterLabel}>Etapa Bimestral</Text>
-              <Picker
-                selectedValue={etapaSelecionada}
-                onValueChange={(itemValue) => setEtapaSelecionada(itemValue)}
-                style={styles.picker}
-              >
-                <Picker.Item label="Selecione" value="" />
-                <Picker.Item label="1ª Etapa" value="1etapa" />
-                <Picker.Item label="2ª Etapa" value="2etapa" />
-                <Picker.Item label="3ª Etapa" value="3etapa" />
-              </Picker>
-            </View>
+          <View style={styles.filterItemVertical}>
+            <Text style={styles.filterLabel}>Turma</Text>
+            <Picker
+              selectedValue={turmaSelecionada}
+              onValueChange={setTurmaSelecionada}
+              style={styles.picker}
+              itemStyle={styles.pickerItem}
+            >
+              <Picker.Item label="Selecione" value="" />
+              <Picker.Item label="1º Ano" value="1ano" />
+              <Picker.Item label="2º Ano" value="2ano" />
+              <Picker.Item label="3º Ano" value="3ano" />
+            </Picker>
+          </View>
 
-            <View style={styles.filterItem}>
-              <Text style={styles.filterLabel}>Disciplina</Text>
-              <Picker
-                selectedValue={disciplinaSelecionada}
-                onValueChange={(itemValue) => setDisciplinaSelecionada(itemValue)}
-                style={styles.picker}
-              >
-                <Picker.Item label="Selecione" value="" />
-                <Picker.Item label="Matemática" value="matematica" />
-                <Picker.Item label="Português" value="portugues" />
-              </Picker>
-            </View>
+          <View style={styles.filterItemVertical}>
+            <Text style={styles.filterLabel}>Etapa Bimestral</Text>
+            <Picker
+              selectedValue={etapaSelecionada}
+              onValueChange={setEtapaSelecionada}
+              style={styles.picker}
+              itemStyle={styles.pickerItem}
+            >
+              <Picker.Item label="Selecione" value="" />
+              <Picker.Item label="1ª Etapa" value="1etapa" />
+              <Picker.Item label="2ª Etapa" value="2etapa" />
+              <Picker.Item label="3ª Etapa" value="3etapa" />
+            </Picker>
+          </View>
+
+          <View style={styles.filterItemVertical}>
+            <Text style={styles.filterLabel}>Disciplina</Text>
+            <Picker
+              selectedValue={disciplinaSelecionada}
+              onValueChange={setDisciplinaSelecionada}
+              style={styles.picker}
+              itemStyle={styles.pickerItem}
+            >
+              <Picker.Item label="Selecione" value="" />
+              <Picker.Item label="Matemática" value="matematica" />
+              <Picker.Item label="Português" value="portugues" />
+            </Picker>
           </View>
 
           <TouchableOpacity style={styles.searchButton} onPress={handlePesquisar}>
@@ -115,12 +117,7 @@ const InterfaceDocente = () => {
               size={24}
               color={telaAtiva === 'Notas' ? '#F9DC5C' : '#FFFFFF'}
             />
-            <Text style={[
-              styles.footerButtonText,
-              telaAtiva === 'Notas' && styles.activeFooterButtonText
-            ]}>
-              Notas
-            </Text>
+            <Text style={[styles.footerButtonText, telaAtiva === 'Notas' && styles.activeFooterButtonText]}>Notas</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => setTelaAtiva('Relatorio')} style={styles.footerButton}>
@@ -129,12 +126,7 @@ const InterfaceDocente = () => {
               size={24}
               color={telaAtiva === 'Relatorio' ? '#F9DC5C' : '#FFFFFF'}
             />
-            <Text style={[
-              styles.footerButtonText,
-              telaAtiva === 'Relatorio' && styles.activeFooterButtonText
-            ]}>
-              Relatório
-            </Text>
+            <Text style={[styles.footerButtonText, telaAtiva === 'Relatorio' && styles.activeFooterButtonText]}>Relatório</Text>
           </TouchableOpacity>
         </View>
 
@@ -185,33 +177,25 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#FFD700',
     width: '90%',
-    alignItems: 'center',
     padding: 15,
   },
-  filterTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 3, alignSelf: 'flex-start' },
-  filterRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: 30,
-  },
-  filterItem: { flex: 1, marginHorizontal: 5 },
-  filterLabel: { fontSize: 12, marginBottom: 5 },
+  filterTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 15 },
+  filterItemVertical: { marginBottom: 27 },
+  filterLabel: { fontSize: 12, marginBottom: 5, color: '#333' },
   picker: {
     backgroundColor: '#F9F9F9',
     borderWidth: 1,
     borderColor: '#CCC',
     borderRadius: 5,
-    height: 30,
+    width: '100%',
+    height: 52,
   },
   searchButton: {
-    position: 'absolute',
-    right: 20,
-    bottom: -15,
     backgroundColor: '#0E0E2C',
     borderRadius: 5,
     paddingHorizontal: 20,
     paddingVertical: 10,
+    alignSelf: 'flex-end',
   },
   searchButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: 'bold' },
   footerContainer: {
