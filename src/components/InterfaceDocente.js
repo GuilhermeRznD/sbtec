@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   View,
@@ -111,13 +112,13 @@ const InterfaceDocente = () => {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => setTelaAtiva('Notas')} style={styles.footerButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Notas')} style={styles.footerButton}>
             <Ionicons
               name="document-text-outline"
               size={24}
               color={telaAtiva === 'Notas' ? '#F9DC5C' : '#FFFFFF'}
-            />
-            <Text style={[styles.footerButtonText, telaAtiva === 'Notas' && styles.activeFooterButtonText]}>Notas</Text>
+           />
+          <Text style={[styles.footerButtonText, telaAtiva === 'Notas' && styles.activeFooterButtonText]}> Notas</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => setTelaAtiva('Relatorio')} style={styles.footerButton}>
@@ -180,15 +181,18 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   filterTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 15 },
-  filterItemVertical: { marginBottom: 27 },
+  filterItemVertical: { marginBottom: 20 },
   filterLabel: { fontSize: 12, marginBottom: 5, color: '#333' },
   picker: {
     backgroundColor: '#F9F9F9',
     borderWidth: 1,
     borderColor: '#CCC',
     borderRadius: 5,
-    width: '100%',
-    height: 52,
+    height: 56,
+    paddingHorizontal: 10,
+  },
+  pickerItem: {
+    fontSize: 12,
   },
   searchButton: {
     backgroundColor: '#0E0E2C',
@@ -201,7 +205,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     backgroundColor: '#0E0E2C',
     paddingTop: 10,
-    paddingBottom: Platform.OS === 'android' ? 20 : 30,
+    paddingBottom: Platform.OS === 'android' ? 40 : 50,
     paddingHorizontal: 10,
   },
   footerContainerExpanded: {

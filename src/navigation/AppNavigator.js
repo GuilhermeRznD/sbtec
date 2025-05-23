@@ -6,6 +6,7 @@ import InterfaceDocente from '../components/InterfaceDocente';
 import RegistroPresenca from '../components/RegistroPresenca'; 
 import Agenda from '../components/Agenda'; 
 import RegistroOcorrencia from '../components/RegistroOcorrencia'; 
+import Notas from '../components/Notas';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,11 @@ const AppNavigator = () => {
           name="Agenda" 
           component={Agenda} 
           options={{ headerShown: false }}  
+        />
+        <Stack.Screen
+          name="Notas"
+          component={Notas}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
