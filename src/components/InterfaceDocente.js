@@ -69,7 +69,7 @@ const InterfaceDocente = () => {
             <Picker
               selectedValue={etapaSelecionada}
               onValueChange={setEtapaSelecionada}
-              style={styles.picker}
+              style={[styles.picker, { color: '#000' }]} // cor preta para o texto
               itemStyle={styles.pickerItem}
             >
               <Picker.Item label="Selecione" value="" />
